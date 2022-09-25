@@ -3,11 +3,21 @@ import { useRouter } from 'next/router';
 import { BiShareAlt, BiArrowBack } from 'react-icons/bi';
 import { TbClock } from 'react-icons/tb';
 import { MdOutlineCleanHands, MdOutlineStar } from 'react-icons/md';
-import { doctorsData } from '../../components/Doctors';
+import { doctorsData } from '../../data/doctorsDB';
 import WindowWrapper from '../../layout/WindowWrapper';
+import Image from 'next/image';
 
 const ViewDoctor = () => {
 	const route = useRouter();
+
+	if (route.isFallback) {
+		return (
+			<div className="h-screen w-full flex justify-center items-center">
+				Loading...
+			</div>
+		);
+	}
+
 	const { id } = route.query;
 	const doctor = doctorsData[id - 1];
 
@@ -29,7 +39,7 @@ const ViewDoctor = () => {
 					<div
 						className={`${doctor?.avatarbg} w-max mx-auto flex rounded-xl`}
 					>
-						<img
+						<Image
 							src={doctor?.image}
 							height={80}
 							width={80}
@@ -96,8 +106,8 @@ const ViewDoctor = () => {
 					<div className="text-xs my-5 md:my-3 flex flex-row overflow-x-scroll hide-scroll-bar">
 						<div className="border drop-shadow-sm rounded-xl p-3 mr-3">
 							<div className="flex justify-between items-center">
-								<div className="w-12 bg-[#eececb] rounded-md">
-									<img
+								<div className="w-12 bg-[#eececb] rounded-md flex">
+									<Image
 										src="https://avataaars.io/?avatarStyle=Transparent&topType=WinterHat2&accessoriesType=Kurt&hatColor=Red&facialHairType=BeardLight&facialHairColor=Brown&clotheType=GraphicShirt&clotheColor=Black&graphicType=SkullOutline&eyeType=Close&eyebrowType=AngryNatural&mouthType=Grimace&skinColor=Brown"
 										height={50}
 										width={50}
@@ -127,8 +137,8 @@ const ViewDoctor = () => {
 						</div>
 						<div className=" border drop-shadow-sm rounded-xl p-3 ">
 							<div className="flex justify-between items-center">
-								<div className="w-12  bg-[#eececb] rounded-md">
-									<img
+								<div className="w-12  bg-[#eececb] rounded-md flex">
+									<Image
 										src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Wayfarers&hairColor=SilverGray&facialHairType=BeardLight&facialHairColor=Brown&clotheType=BlazerSweater&eyeType=Side&eyebrowType=Angry&mouthType=Disbelief&skinColor=Light"
 										height={50}
 										width={50}
@@ -170,3 +180,21 @@ const ViewDoctor = () => {
 };
 
 export default ViewDoctor;
+
+export async function getStaticPaths() {
+	return {
+		paths: [
+			{ params: { id: '1' } },
+			{ params: { id: '2' } },
+			{ params: { id: '3' } },
+			{ params: { id: '4' } },
+		],
+		fallback: false, // can also be true or 'blocking'
+	};
+}
+
+export async function getStaticProps() {
+	return {
+		props: { doctorsData },
+	};
+}
