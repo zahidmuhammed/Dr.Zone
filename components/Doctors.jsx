@@ -13,7 +13,7 @@ const Doctors = () => {
 			{doctorsData.map((item, index) => (
 				<Link href={`doctor/${index + 1}`} key={index}>
 					<div className="flex justify-between py-2 cursor-pointer">
-						<div className={`${item.avatarbg} rounded-md flex`}>
+						<div className={`bg-[#ccdfff] rounded-md flex`}>
 							<Image
 								src={item.image}
 								height={40}

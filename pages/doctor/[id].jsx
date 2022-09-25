@@ -37,7 +37,7 @@ const ViewDoctor = () => {
 				</div>
 				<div className="flex flex-col justify-center items-center py-3">
 					<div
-						className={`${doctor?.avatarbg} w-max mx-auto flex rounded-xl`}
+						className={`bg-[#b0d5ed] w-max mx-auto flex rounded-xl`}
 					>
 						<Image
 							src={doctor?.image}
